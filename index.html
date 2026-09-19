@@ -27,6 +27,11 @@
 <meta name="license" content="CC BY-NC-SA 4.0">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#CBDCEF">
+<!-- ホーム画面に追加したときの名前とアイコン（manifest.json と dear_img/ のアイコン） -->
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="dear_img/icon-192.png">
+<link rel="apple-touch-icon" href="dear_img/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Dear,ことのは">
 <title>Dear, ことのは ── 声で伝えて、手紙で受け取る</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -110,7 +115,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .brandmark .sub{display:block;font-family:var(--en);font-style:italic;font-weight:400;
   font-size:min(4.6vw,19px);letter-spacing:.06em;color:var(--sunset);margin-top:12px;
   white-space:normal}
-.tagline{color:var(--muted);font-size:14.5px;line-height:1.8;max-width:min(94%,420px);margin:0 auto}
+.tagline{color:var(--muted);font-size:min(14.5px,calc((100vw - 44px) / 24.6));line-height:1.8;margin:0 auto}
 .heart-divider{display:flex;align-items:center;justify-content:center;gap:12px;color:var(--haze)}
 .heart-divider::before,.heart-divider::after{content:"";height:1px;width:64px;
   background:linear-gradient(90deg,transparent,var(--haze))}
@@ -394,7 +399,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .wl-status.ng{color:var(--sunset);background:rgba(255,176,124,.11)}
 .wl-empty{text-align:center;color:var(--dim);font-size:13.5px;padding:30px 10px;line-height:2}
 
-/* ---------- タイムアタック ---------- */
+/* ---------- トレーニング（旧タイムアタック） ---------- */
 .ta-best{background:var(--dusk);border:1px solid rgba(84,64,111,.55);border-radius:18px;
   padding:16px 18px 14px;margin-bottom:16px}
 .ta-best-cap{font-size:11.5px;color:var(--dim);letter-spacing:.04em}
@@ -424,7 +429,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .ta-last-sub{display:flex;gap:16px;margin-top:9px;font-size:11.5px;color:var(--muted)}
 .ta-last-sub b{font-family:var(--en);color:var(--cream);font-size:14px;font-weight:700}
 
-/* プレイ中のタイムアタック表示 */
+/* プレイ中のトレーニング表示 */
 .play.ta-on .hearts{display:none}
 #taHud{display:none;align-items:baseline;gap:9px}
 .play-top.ta-on #taHud{display:flex}
@@ -468,18 +473,22 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   border:1px solid var(--haze);border-radius:22px;padding:20px}
 .modal-card h2{font-family:var(--story);font-size:20px;margin:0 0 4px}
 .modal-card p.lead{color:var(--muted);font-size:13px;margin:0 0 16px;line-height:1.7}
-.set-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;
+/* 設定の1行。ボタンの文字は折らない。ラベルの横に収まらないときは、ボタンを下の行（右寄せ）に送る */
+.set-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;padding:11px 0;
   border-bottom:1px dashed rgba(84,64,111,.5)}
 .set-row:last-of-type{border-bottom:0}
-.set-label{font-size:14px}
-.set-ctl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.set-label{font-size:14px;flex:1 1 140px;min-width:0}
+.set-ctl{display:flex;align-items:center;gap:8px;justify-content:flex-end;flex:0 0 auto;margin-left:auto}
 .try-say{background:rgba(255,255,255,.05);border:1px solid var(--haze);color:var(--ink);
   border-radius:11px;padding:7px 11px;font-size:12px;cursor:pointer;white-space:nowrap;font-family:inherit}
 .try-say:active{transform:scale(.96)}
 .set-label small{display:block;color:var(--dim);font-size:11px;margin-top:2px;line-height:1.4}
 .seg{display:inline-flex;background:rgba(255,255,255,.05);border:1px solid var(--haze);border-radius:11px;overflow:hidden}
-.seg button{padding:8px 12px;font-size:12.5px;color:var(--muted)}
+.seg button{padding:8px 12px;font-size:12.5px;color:var(--muted);white-space:nowrap}
 .seg button.on{background:linear-gradient(135deg,var(--blush),var(--blush-deep));color:#3A0E22;font-weight:700}
+/* トレーニングの章（1〜12）は、6つずつ2段に並べる */
+#taChSeg{display:grid;grid-template-columns:repeat(6,minmax(34px,1fr))}
+#taChSeg button{padding:8px 0}
 .help-body{font-size:13.5px;line-height:1.85;color:var(--cream)}
 .help-body p{margin:0 0 12px}
 .help-body .k{color:var(--blush);font-weight:700}
@@ -579,7 +588,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .choice .k{flex:0 0 22px;height:22px;border-radius:7px;display:grid;place-items:center;
   font-family:var(--en);font-size:12px;color:var(--muted);border:1px solid var(--haze)}
 .choice .t{flex:1;min-width:0;word-break:break-word}
-.choice:not([disabled]):hover{border-color:rgba(255,143,177,.55)}
+@media (hover:hover) and (pointer:fine){.choice:not([disabled]):hover{border-color:rgba(255,143,177,.55)}}
 .choice:active{transform:scale(.98)}
 .choice.ok{background:linear-gradient(135deg,rgba(143,227,198,.30),rgba(143,227,198,.10));border-color:var(--mint)}
 .choice.ok .k{color:var(--mint);border-color:var(--mint)}
@@ -606,6 +615,25 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .paper p.sign + p{margin-top:32px}
 .paper p.ps{font-size:15px;color:#5A4A78}
 .paper.ja p{font-family:var(--story);font-size:15.5px}
+/* ---------- ホーム画面に追加（スマホのときだけ出す） ---------- */
+.a2hs{display:none;align-self:center;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;
+  font-size:13.5px;font-weight:700;color:var(--cream);background:rgba(255,255,255,.06);border:1px solid var(--haze)}
+.a2hs.on{display:inline-flex}
+.a2hs:active{transform:scale(.97)}
+.a2hs-steps{margin:0;padding:0;list-style:none;counter-reset:st}
+.a2hs-steps li{position:relative;padding:10px 0 10px 38px;font-size:14px;line-height:1.75;
+  border-bottom:1px dashed rgba(84,64,111,.5)}
+.a2hs-steps li:last-child{border-bottom:0}
+.a2hs-steps li::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:11px;width:26px;height:26px;
+  border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:13px;color:#3A0E22;
+  background:linear-gradient(135deg,var(--blush),var(--blush-deep))}
+.a2hs-steps b{color:var(--blush)}
+.a2hs-steps .ico{display:inline-block;width:20px;height:20px;vertical-align:-4px;margin:0 2px;color:var(--blush)}
+.a2hs-steps small{display:block;color:var(--muted);font-size:12px;line-height:1.6}
+.a2hs-note{font-size:12px;color:var(--muted);line-height:1.7;margin:10px 0 0}
+body.t-title #title .a2hs{color:#1B3A6B;background:rgba(255,255,255,.78);border-color:rgba(27,58,107,.28);
+  box-shadow:0 6px 16px rgba(34,52,79,.08)}
+
 /* =================== トップページ ── 朝のエアメール ===================
    「恋のことのは」（夜のすみれ色）とひと目で見分けがつくように、タイトル画面だけ
    夜明けの空・便箋・エアメールの色でまとめる。body.t-title が付いている間だけ効く。
@@ -645,26 +673,30 @@ body.t-title .postmark{display:grid}
 .postmark b{display:block;font-size:12.5px;letter-spacing:.14em}
 .postmark i{display:block;font-style:normal;font-size:9px;letter-spacing:.18em}
 /* 文字と、ボタン */
-body.t-title .brandmark{color:var(--t-ink);
+body.t-title #title .brandmark{color:var(--t-ink);
   text-shadow:0 1px 0 rgba(255,255,255,.6),0 12px 30px rgba(34,52,79,.14)}
-body.t-title .brandmark .sub{color:#A06A4C}
-body.t-title .chip{background:rgba(27,58,107,.07);border-color:rgba(27,58,107,.28);color:var(--t-navy)}
-body.t-title .heart-divider{color:#BBA184}
-body.t-title .heart-divider::before{background:linear-gradient(90deg,transparent,#C9B49B)}
-body.t-title .heart-divider::after{background:linear-gradient(90deg,#C9B49B,transparent)}
-body.t-title .tagline{color:var(--t-sub)}
-body.t-title .btn.primary{background:linear-gradient(135deg,#F3899A,#D6455F);color:#fff;
+body.t-title #title .brandmark .sub{color:#A06A4C}
+/* 副題「恋のことのは Season2」。英語の副題より少し前に、ローズ色で */
+.brandmark .season{display:block;font-family:var(--story);font-weight:700;font-size:min(4.4vw,19px);
+  letter-spacing:.1em;margin-top:12px;white-space:nowrap;color:var(--blush)}
+body.t-title #title .brandmark .season{color:#C4577A;text-shadow:none}
+body.t-title #title .chip{background:rgba(27,58,107,.07);border-color:rgba(27,58,107,.28);color:var(--t-navy)}
+body.t-title #title .heart-divider{color:#BBA184}
+body.t-title #title .heart-divider::before{background:linear-gradient(90deg,transparent,#C9B49B)}
+body.t-title #title .heart-divider::after{background:linear-gradient(90deg,#C9B49B,transparent)}
+body.t-title #title .tagline{color:var(--t-sub)}
+body.t-title #title .btn.primary{background:linear-gradient(135deg,#F3899A,#D6455F);color:#fff;
   box-shadow:0 10px 24px rgba(214,69,95,.3)}
-body.t-title .btn.ghost{background:rgba(255,255,255,.72);border-color:rgba(34,52,79,.2);
+body.t-title #title .btn.ghost{background:rgba(255,255,255,.72);border-color:rgba(34,52,79,.2);
   color:var(--t-ink);box-shadow:0 6px 18px rgba(34,52,79,.08)}
-body.t-title .mini-link{color:var(--t-sub)}
-body.t-title .tts-hint{border-color:rgba(27,58,107,.22);background:rgba(255,255,255,.5)}
-body.t-title .tts-hint p{color:var(--t-faint)}
-body.t-title .try-say{background:rgba(255,255,255,.82);border-color:rgba(34,52,79,.2);color:var(--t-ink)}
-body.t-title .tts-hint .try-say.done{border-color:rgba(214,69,95,.55);color:#C0405C}
-body.t-title .footer-note,body.t-title .credit{color:var(--t-faint)}
-body.t-title .credit a{color:var(--t-faint)}
-body.t-title .credit a:hover{color:var(--t-ink)}
+body.t-title #title .mini-link{color:var(--t-sub)}
+body.t-title #title .tts-hint{border-color:rgba(27,58,107,.22);background:rgba(255,255,255,.5)}
+body.t-title #title .tts-hint p{color:var(--t-faint)}
+body.t-title #title .try-say{background:rgba(255,255,255,.82);border-color:rgba(34,52,79,.2);color:var(--t-ink)}
+body.t-title #title .tts-hint .try-say.done{border-color:rgba(214,69,95,.55);color:#C0405C}
+body.t-title #title .footer-note,body.t-title #title .credit{color:var(--t-faint)}
+body.t-title #title .credit a{color:var(--t-faint)}
+body.t-title #title .credit a:hover{color:var(--t-ink)}
 @media (max-width:430px){
   .airmail{border-width:8px;border-image:repeating-linear-gradient(45deg,
     #C8102E 0 8px,#FBF6EE 8px 16px,#1B3A6B 16px 24px,#FBF6EE 24px 32px) 8}
@@ -687,7 +719,7 @@ body.t-title .credit a:hover{color:var(--t-ink)}
   <section class="screen on" id="title">
     <div class="wrap">
       <div class="chip">🎤 声で伝えて ✉️ 手紙で受け取る英単語ゲーム</div>
-      <div class="brandmark">Dear, ことのは<span class="sub">Say it with your voice. Read it with your heart.</span></div>
+      <div class="brandmark">Dear, ことのは<span class="season">― 恋のことのは Season2 ―</span><span class="sub">Say it with your voice. Read it with your heart.</span></div>
       <div class="heart-divider">✉</div>
       <p class="tagline">前半は、となりの席の留学生に、声で想いを伝える。<br>後半は、海の向こうから届く英語の手紙を読み解く。<br>全12章の物語。</p>
       <div class="btn-row">
@@ -697,10 +729,11 @@ body.t-title .credit a:hover{color:var(--t-ink)}
       <div class="top-actions">
         <button class="mini-link" id="btnSettings">設定</button>
         <button class="mini-link" id="btnReviewTop">苦手のことば</button>
-        <button class="mini-link" id="btnTaTop">タイムアタック</button>
+        <button class="mini-link" id="btnTaTop">トレーニング</button>
         <button class="mini-link" id="btnDiagTop">マイクの確認</button>
         <button class="mini-link" id="btnReset">記録を消す</button>
       </div>
+      <button class="a2hs" id="btnA2hs">📲 ホーム画面に追加する</button>
       <div class="tts-hint">
         <button class="try-say" id="btnTrySayTop">▶ お手本の音声を鳴らしてみる</button>
         <p>正解のときにお手本が読み上げられないときは、<br>ここを一度押すと鳴るようになります。</p>
@@ -739,7 +772,7 @@ body.t-title .credit a:hover{color:var(--t-ink)}
   <section class="screen" id="ta">
     <div class="wrap">
       <div class="head">
-        <h1>タイムアタック</h1>
+        <h1>トレーニング</h1>
         <button class="mini-link" id="btnTaBack">もどる</button>
       </div>
 
@@ -769,12 +802,14 @@ body.t-title .credit a:hover{color:var(--t-ink)}
           <div class="seg" id="taChSeg">
             <button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button>
             <button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button>
+            <button data-v="7">7</button><button data-v="8">8</button><button data-v="9">9</button>
+            <button data-v="10">10</button><button data-v="11">11</button><button data-v="12">12</button>
           </div>
         </div>
       </div>
 
       <button class="btn primary block" id="btnTaStart" style="margin-top:16px;font-size:17px;padding:18px">スタート</button>
-      <div class="footer-note">前半（No.1–600）の単語を、制限時間内に何語 言えるか。ハートは減りません。<br>言えなかったことばは「苦手のことば」に記録されます。</div>
+      <div class="footer-note">制限時間内に何語 答えられるか。第1〜6章の語は声（キーボード）、第7〜12章の語は4択で答えます。ハートは減りません。<br>答えられなかったことばは「苦手のことば」に記録されます。</div>
     </div>
   </section>
 
@@ -952,7 +987,7 @@ body.t-title .credit a:hover{color:var(--t-ink)}
       <p><span class="k">お手本の音声</span> 正解の直後と、答えられなかったときに流れます。後半はフレーズごと読み上げます（設定でオフにできます）。</p>
       <p><span class="k">苦手のことば</span> 言えなかった・読めなかったことばは自動で記録されます。結果画面か「苦手のことば」から、いつでも練習し直せます。前半のことばは 🎤 でその場の発音チェックもできます。</p>
       <p class="muted" style="font-size:12px">うまく聞き取ってもらえないときは、設定の「発音判定」を<b>あまい</b>にしてみてください。マイクがまったく反応しないときは、タイトル画面の「マイクの確認」をお試しください。iPhone では「設定 → 一般 → キーボード → 音声入力」がオンである必要があります。</p>
-      <p style="margin-top:14px"><span class="k">★</span> <b>タイムアタック</b>：前半（No.1–600）の単語を、制限時間内に何語言えるかに挑戦するモードです。ハートは減らず、自己ベストと記録の変化がグラフで残ります。</p>
+      <p style="margin-top:14px"><span class="k">★</span> <b>トレーニング</b>：制限時間内に何語答えられるかに挑戦するモードです。第1〜6章の語は声（キーボード）で、第7〜12章の語は本編と同じ4択で答えます。ハートは減らず、自己ベストと記録の変化がグラフで残ります。</p>
       <p class="muted" style="font-size:11.5px;margin-top:14px;padding-top:12px;border-top:1px dashed rgba(84,64,111,.5)">
         「Dear, ことのは」© 2026 Tomoaki Kito（「恋のことのは」姉妹編）<br>
         <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">CC BY-NC-SA 4.0</a> のもとで公開しています。
@@ -960,6 +995,17 @@ body.t-title .credit a:hover{color:var(--t-ink)}
       </p>
     </div>
     <button class="btn primary block" id="helpClose" style="margin-top:16px">とじる</button>
+  </div>
+</div>
+
+<div class="modal" id="mA2hs">
+  <div class="modal-card">
+    <h2>ホーム画面に追加</h2>
+    <p class="lead">ホーム画面に「Dear,ことのは」のアイコンができて、次からはワンタップで開けます。</p>
+    <ol class="a2hs-steps" id="a2hsSteps"></ol>
+    <p class="a2hs-note" id="a2hsNote"></p>
+    <button class="btn primary block" id="a2hsClose" style="margin-top:16px">とじる</button>
+    <button class="btn ghost block" id="a2hsDone" style="margin-top:8px">追加できた（もう出さない）</button>
   </div>
 </div>
 
@@ -1559,7 +1605,7 @@ const LIAM_STAGES = [
       {who:'', text:'はじめは一行読むのに十分かかった英語の手紙を、今は辞書なしで読める。……会いたい気持ちに、目が必死で追いつこうとしているだけかもしれない。'},
       {who:'美咲', text:'最後の一文は、ちゃんと自分で読みな。ここは、あんたの番だよ。'}
     ],
-    moment:{ title:'手紙の山場 ── 最後の一文', line:'最後の一文だけは、誰にも訳してほしくない。' },
+    moment:{ title:'手紙の山場 ── 最後の一文', line:'最後の一文だけは、誰にも訳してほしくない。自分の声で、読みたい。' },
     clear:[],
     letter:{ title:'手紙⑥ ── 3月',
       en:['Dear Kotonoha,',
@@ -1567,7 +1613,8 @@ const LIAM_STAGES = [
           'When I first came to Japan, I couldn\'t say anything in Japanese, and you couldn\'t say much in English. But we understood each other. Maybe words don\'t only live in dictionaries.',
           'Every word you gave me is precious. I kept all of them. I\'m grateful for every day with you, even the days we were far apart.',
           'I\'ll be waiting under the biggest cherry tree near our school, on March 28th, at 4 p.m.',
-          'I learned a lot of words this year. But the most important one, I want to hear from you.',
+          'At the airport, I said one word to you without my voice. It didn\'t reach you, did it?',
+          'I learned a lot of words this year, but that one is the most important. I\'ll say it with my voice this time.',
           'See you soon,',
           'Liam'],
       ja:['ことのはへ',
@@ -1575,7 +1622,8 @@ const LIAM_STAGES = [
           'はじめて日本に来たとき、僕は日本語が何も話せなかったし、君も英語があまり話せなかった。でも、僕たちはわかり合えた。言葉は、辞書の中だけにあるんじゃないのかもしれない。',
           '君がくれた言葉は、どれも宝物だ。全部とってある。君と過ごした毎日に感謝している。離れていた日々も含めて。',
           '三月二十八日の午後四時、学校の近くのいちばん大きな桜の木の下で待っています。',
-          'この一年で、たくさんの言葉を覚えた。でもいちばん大切な一語は、君の口から聞きたい。',
+          '空港で、僕は声に出さずに、君にひとことだけ言った。届かなかったよね。',
+          'この一年で、たくさんの言葉を覚えた。でも、いちばん大切なのはあの一語だ。今度は、声で言う。',
           'また、すぐに。',
           'リアム'] }},
 ];
@@ -1620,25 +1668,30 @@ const CHARS = [
     tag:'オーストラリアからの留学生', face:{x:'50%', y:'30%'},
     school:'愛知県立 潮見丘高等学校',
     stages:LIAM_STAGES,
-    /* 最終章「手紙の山場」は決め打ち。最後の一語だけ、声（またはキーボード）に戻る */
-    climax:() => [ byNum[1113], byNum[1163], [0,'I','you, Liam.','あなたを愛している','love'] ],
+    /* 最終章「手紙の山場」は決め打ち。最後の一問だけ、声（またはキーボード）に戻る ──
+       手紙⑥の最後の一文（リアムの約束）を、自分の声で読む。告白はこのあと、桜の木の下でリアムから。 */
+    climax:() => [ byNum[1113], byNum[1163], [0,"I'll say it with my",'this time.','今度は、声で言うよ','voice'] ],
+    /* 告白はリアムから。空港では声にならなかった一語が、今度は声で届く（最後の一行はゲームが読み上げる） */
     confess:[
       {who:'', text:'三月二十八日、午後四時。学校の近くの、いちばん大きな桜の木の下。'},
       {who:'', text:'花びらの向こうに、少し背が伸びた、日焼けした横顔。'},
       {who:'リアム', text:'ヒサシブリ。……アイタカッタ。'},
       {who:'', text:'ずるい。先に日本語で言うなんて。'},
-      {who:'', text:'半年間、受け取ってばかりだった。今度は、わたしが声にする番だ。'},
+      {who:'リアム', text:'"At the airport, I said one word without my voice. It didn\'t reach you, did it?"（空港で、声に出さずにひとこと言ったんだ。届かなかったよね）'},
+      {who:'', text:'搭乗口の前で、口の形だけで言われた一語。半年間、どの辞書を引いても見つからなかった。'},
+      {who:'リアム', text:'"So this time, I\'ll say it with my voice. Listen."（だから今度は、声で言う。聞いてて）'},
       {who:'', text:'　', pause:1300},
-      {who:'わたし', text:'"Liam... I love you."', slow:true, fx:true}
+      {who:'リアム', text:'"Kotonoha... I love you."', slow:true, fx:true, say:'Kotonoha... I love you.'}
     ],
     endTitle:'ことのはが、届いた日',
     ending:[
-      {who:'リアム', text:'"...Finally. I\'ve been waiting six months for that word."（……やっと。その一語を、半年待ってた）'},
-      {who:'リアム', text:'"At the airport, I said it without my voice. \'Love you.\' You didn\'t catch it, did you?"（空港で、声に出さずに言ったんだ。「好きだよ」って。気づかなかったでしょ？）'},
+      {who:'', text:'届いた。空港では声にならなかった一語が、今度はちゃんと、声で。'},
       {who:'', text:'あのとき読み取れなかった一語。答え合わせは、半年遅れでやってきた。'},
-      {who:'リアム', text:'"I love you too, Kotonoha. You are my favorite word."（僕も好きだよ、ことのは。君は、僕のいちばん好きな言葉だ）'},
+      {who:'リアム', text:'"You taught me so many words. But my favorite word is you, Kotonoha."（君はたくさんの言葉を教えてくれた。でも、僕のいちばん好きな言葉は君だよ、ことのは）'},
       {who:'', text:'クサい。クサすぎる。英語だから許されるのか、リアムだから許されるのか、わからない。'},
       {who:'', text:'でも、この一年でいちばん、辞書のいらない言葉だった。'},
+      {who:'わたし', text:'"...Me too. I love you, Liam."', slow:true},
+      {who:'', text:'声は少しふるえた。でも今度は、わたしの声も、ちゃんと届いた。'},
       {who:'リアム', text:'"By the way... can you teach me one more Japanese word? How do you say \'I love you\'?"（ところで……もうひとつだけ日本語を教えてくれる？「I love you」って、なんて言うの？）'},
       {who:'', text:'……それは、また今度。この春の宿題にしておく。'},
       {who:'', text:'桜の花びらが、ふたりのあいだに降ってくる。葉っぱが芽吹くまで、もう少し。', pause:900},
@@ -2259,14 +2312,14 @@ async function nextWord(){
   if(G.phase==='moment' && G.momentHp<=0) return endChapter(true);
 
   /* 最終章の「手紙の山場」だけは、ランダムではなく決め打ちの3問。
-     最後は必ず love ── 桜の木の下で、リアムの前で声にする一語。 */
+     最後は必ず voice ── 手紙の最後の一文（リアムの約束）を、自分の声で読む。 */
   const cl = (G.phase==='moment' && !G.review && !G.ta && G.stage===STAGE_COUNT) ? CH().climax() : null;
   const pool = G.review ? G.queue : POOL[G.stage];
   const row = cl
     ? cl[Math.max(0, Math.min(cl.length-1, G.momentTotal - G.momentHp))]
     : (G.phase==='moment' ? pool[(Math.random()*pool.length)|0] : G.queue[G.i]);
   G.word = row;
-  if(cl && G.arenaLetter !== isRead(row)) setArena(isRead(row));
+  if((cl || G.ta) && G.arenaLetter !== isRead(row)){ setArena(isRead(row)); updateCombo(); }
 
   if(isRead(row)) paintRead(row); else paintSpeak(row);
 
@@ -2281,7 +2334,7 @@ async function nextWord(){
   }
   if(!G.ta) renderHearts();
 
-  if(G.ta){ G.dur = TA_WORD_LIMIT; taClock(); }
+  if(G.ta){ G.dur = TA_WORD_LIMIT; $('#timeLbl').textContent='のこり時間'; taClock(); }
   else {
     $('#timeFill').style.width='100%'; $('#timeTrack').classList.remove('crit');
     G.dur = G.kind==='read' ? readDuration() : durationFor(G.stage) * (G.phase==='moment'?.85:1);
@@ -2473,14 +2526,16 @@ async function momentIntro(st){
 }
 
 /* =========================================================================
-   タイムアタック
+   トレーニング（旧タイムアタック）── 制限時間内に何語答えられるか。
+   第1〜6章の語は声（キーボード）、第7〜12章の語は4択。内部の名前（ta・taCfg など）は旧名のまま。
    ========================================================================= */
 const TA_SEC = [30,60,120];
 const TA_WORD_LIMIT = 7000;          /* 1語で詰まったら自動で次へ */
 let taCfg = { sec:60, range:'all', ch:1 };
 
 function taKey(){
-  const m = CFG.input==='type' ? 'type' : 'voice';
+  /* 第7〜12章だけのときは4択なので、声／キーボードの設定で記録を分けない */
+  const m = (taCfg.range==='ch' && taCfg.ch>SPEAK_LAST) ? 'read' : (CFG.input==='type' ? 'type' : 'voice');
   const r = taCfg.range==='ch' ? ('ch'+taCfg.ch) : taCfg.range;
   return m+'-'+taCfg.sec+'-'+r;
 }
@@ -2491,9 +2546,9 @@ function taStore(){
   return SAVE.ta;
 }
 function taRows(){
-  if(taCfg.range==='weak'){ const w=speakRows(weakRows()); return w.length?w:W.slice(); }
+  if(taCfg.range==='weak'){ const w=weakRows(); return w.length?w:W.concat(R); }
   if(taCfg.range==='ch')  return (POOL[taCfg.ch]||W).slice();
-  return W.slice();
+  return W.concat(R);             /* ぜんぶ ＝ 第1〜12章（前半は声、後半は4択） */
 }
 
 /* 出題は尽きない。使い切ったら切り直す。 */
@@ -2504,21 +2559,21 @@ function taRefill(){
 
 function startTA(){
   TALLY.hit('play', 'プレイ開始');
-  TALLY.hit('play-timeattack', 'タイムアタック開始');
+  TALLY.hit('play-timeattack', 'トレーニング開始');     /* 集計のパスは旧名のまま（記録をつなげるため） */
   const rows = taRows();
   if(!rows.length){ toast('出題できることばがありません。'); return; }
   G.stage=1; G.review=false; G.hp=99; G.combo=0; G.maxCombo=0; G.right=0; G.tries=0;
   G.missed=[]; G.requeued=new Set(); G.phase='wave'; G.kind='';
   G.running=true; G.locked=false; G.nearCount=0;
   G.ta = { sec:taCfg.sec, key:taKey(), endAt:performance.now()+taCfg.sec*1000, timer:0, over:false };
-  setPoolWords(new Set(rows.flatMap(r=>r[4].split(',')).map(a=>norm(a)).filter(Boolean)));
+  setPoolWords(guardSet(rows));     /* 声で答える語だけで作る（4択の行の r[4] は英文の後半） */
   taRefill();
-  setSky('ch2');
-  $('#chapTag').textContent='TIME ATTACK';
+  setSky(taCfg.range==='ch' ? STAGES[taCfg.ch-1].mood : 'ch2');
+  $('#chapTag').textContent='TRAINING';
   $('#playTop').classList.add('ta-on');
   $('#btnPass').style.display='';
   $('#taCount').textContent='0'; $('#taCombo').textContent='';
-  setArena(false);
+  setArena(isRead(G.queue[0]));
   show('play');
   clearInterval(G.ta.timer);
   G.ta.timer = setInterval(taClock, 100);
@@ -2795,6 +2850,7 @@ const CINE = (() => {
           clearTimeout(typeT); typing=false;
           gateAt = b.pause ? Date.now()+b.pause : 0;
           if(b.fx){ SFX.flutter(); } else { SFX.tap(); }
+          if(b.say) say(b.say);
           if(b.slow){
             const full = b.text||''; let k=0; textEl.textContent='';
             typing = true;
@@ -3237,6 +3293,10 @@ function wire(){
   $('#ttsFix').onclick = ()=>{ setTtsBroken(false); ttsRescue(); };
   $('#btnHelp').onclick = ()=> openModal('#mHelp');
   $('#helpClose').onclick = ()=> closeModal('#mHelp');
+  $('#btnA2hs').onclick = ()=> A2HS.open();
+  $('#a2hsClose').onclick = ()=> closeModal('#mA2hs');
+  $('#a2hsDone').onclick = ()=>{ A2HS.hide(); closeModal('#mA2hs');
+    toast('ボタンを消しました。ホーム画面のアイコンから開けます。'); };
   $('#btnSettings').onclick = $('#btnSettings2').onclick = ()=>{ renderSettings(); openModal('#mSettings'); };
   $('#setClose').onclick = ()=> closeModal('#mSettings');
   $('#btnTitle').onclick = ()=>{ setSky(''); show('title'); };
@@ -3303,7 +3363,7 @@ function wire(){
   });
   $('#btnRetreat').onclick = ()=>{
     if(G.ta){
-      if(!confirm('タイムアタックをやめますか？（この回の記録は残りません）')) return;
+      if(!confirm('トレーニングをやめますか？（この回の記録は残りません）')) return;
       taAbort(); renderTA(null); setSky(''); show('ta'); return;
     }
     if(!confirm('この章をやめて、章えらびにもどりますか？')) return;
@@ -3364,6 +3424,62 @@ function wire(){
     document.addEventListener(ev, unlock, {capture:true}));
 }
 
+/* =========================================================================
+   ホーム画面に追加 ── スマホ（iPhone・Android）で開いたときだけ、タイトルにボタンを出す。
+   ・Android の Chrome は、インストールの画面をそのまま開ける（beforeinstallprompt）。
+     来ないとき（条件がそろう前・ほかのブラウザ）は、手順を出す。
+   ・iPhone は Web ページから開けないので、手順を出す。
+   ・manifest.json の display は minimal-ui。iPhone は minimal-ui を使わず、ふつうの Safari で開く
+     （記録と音声入力が、Safari で遊ぶときと同じになる）。
+   ========================================================================= */
+const A2HS = (() => {
+  const ua = navigator.userAgent;
+  const isAndroid = /Android/i.test(ua);
+  const inApp = /Line\/|FBAN|FBAV|Instagram/i.test(ua);
+  const launched = () => matchMedia('(display-mode: standalone)').matches
+    || matchMedia('(display-mode: minimal-ui)').matches || navigator.standalone === true;
+  const SHARE = '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" '
+    + 'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/>'
+    + '<path d="M7 10H5.5A1.5 1.5 0 0 0 4 11.5v8A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 18.5 10H17"/></svg>';
+  let deferred = null;
+  const hidden = () => { try{ return localStorage.getItem('dear:a2hs')==='1'; }catch(e){ return false; } };
+  function refresh(){
+    const b = $('#btnA2hs'); if(!b) return;
+    b.classList.toggle('on', (IS_IOS || isAndroid || !!deferred) && !launched() && !hidden());
+  }
+  function steps(ios){
+    if(ios) return { list:[
+        `画面の下（または上）にある <b>［共有］</b>${SHARE}をタップ。<small>見つからないときは、<b>［…］</b>をタップすると出てきます。</small>`,
+        'メニューを下にスクロールして、<b>「ホーム画面に追加」</b>をタップ。',
+        '<b>「Webアプリとして開く」</b>が出ていたら、<b>オフ</b>にする。<small>Safari で開くので、今までの記録と音声入力がそのまま使えます。</small>',
+        '右上の<b>「追加」</b>をタップ。'],
+      note: inApp ? 'LINE などのアプリの中で開いているときは、先にメニューから「Safari で開く」を選んでください。'
+                  : 'Chrome など Safari 以外で開いているときも、同じように［共有］から追加できます。' };
+    return { list:[
+        '右上の <b>［⋮］</b>（メニュー）をタップ。',
+        '<b>「ホーム画面に追加」</b>または<b>「アプリをインストール」</b>をタップ。',
+        '<b>「追加」</b>（または「インストール」）をタップ。'],
+      note: inApp ? 'LINE などのアプリの中で開いているときは、先にメニューから「ブラウザで開く」を選んでください。' : '' };
+  }
+  async function open(){
+    if(deferred){                 /* Android の Chrome：インストールの画面をそのまま出す */
+      const p = deferred; deferred = null;
+      try{ await p.prompt(); const r = await p.userChoice;
+           if(r && r.outcome==='accepted') toast('ホーム画面に追加しました。'); }catch(e){}
+      refresh(); return;
+    }
+    const st = steps(IS_IOS);
+    $('#a2hsSteps').innerHTML = st.list.map(t=>`<li>${t}</li>`).join('');
+    $('#a2hsNote').textContent = st.note;
+    $('#a2hsNote').style.display = st.note ? '' : 'none';
+    openModal('#mA2hs');
+  }
+  function hide(){ try{ localStorage.setItem('dear:a2hs','1'); }catch(e){} refresh(); }
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; refresh(); });
+  window.addEventListener('appinstalled', () => { deferred = null; hide(); });
+  return { refresh, open, hide, steps };
+})();
+
 /* ---------- init ---------- */
 (async function init(){
   await loadAll();
@@ -3374,6 +3490,7 @@ function wire(){
   renderSelect();
   updateReviewLinks();
   setTimeout(preloadArt, 600);
+  A2HS.refresh();
 })();
 </script>
 </body>

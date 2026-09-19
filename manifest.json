@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "Dear, ことのは ― 恋のことのは Season2",
+  "short_name": "Dear,ことのは",
+  "description": "声で伝えて、手紙で受け取る英単語ゲーム",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "minimal-ui",
+  "background_color": "#241B3A",
+  "theme_color": "#241B3A",
+  "icons": [
+    { "src": "dear_img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "dear_img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "dear_img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
