@@ -1728,7 +1728,8 @@ const EPILOGUE = {
    設定するときは、GoatCounter で取得したコードだけを書きます。
      例）https://kotonoha.goatcounter.com なら  'kotonoha'
    ========================================================================= */
-const COUNT_CODE = 'goldfish0824';
+/* 2026-09-19 から、恋のことのは（goldfish0824 → koi-no-kotonoha）とは別のサイトで集計する */
+const COUNT_CODE = 'dear-kotonoha';
 
 const TALLY = (function(){
   const off = { hit:function(){} };
@@ -1762,7 +1763,6 @@ const TALLY = (function(){
     /* 集計は「何回遊ばれたか」だけ。誰が・どの端末かは一切送りません。 */
     hit: function(path, title){
       if(!path || dead) return;
-      path = 'dear-' + path;       /* 恋のことのはの集計と分ける */
       if(ready) fire({path:path, title:title});
       else if(queue.length < 30) queue.push({path:path, title:title});
     }
